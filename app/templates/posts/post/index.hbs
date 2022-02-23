@@ -1,0 +1,67 @@
+<div class="flex items-center">
+  <h1 data-test-id="title">{{this.model.title}}</h1>
+
+  <p class='pl4'>
+    {{#link-to 'posts.post.edit' this.model.id class='dim link silver'}}
+      Edit post
+    {{/link-to}}
+  </p>
+</div>
+
+<div class="flex mb3 items-center">
+  <p class='mr1'>
+    Tags:
+  </p>
+
+  <span class='mr2'>
+    <a {{action (toggle 'isEditingTags' this)}}
+      class='link silver br1 f7 dib flex items-center justify-center w2 h2 hover-near-black'
+      href="#"
+      data-modal-attach-id='tag-list'>
+      {{fa-icon 'pencil'}}
+    </a>
+  </span>
+
+  {{tag-list tags=this.model.tags}}
+</div>
+
+<hr class='bt-0 mv3'>
+<div class='lh-copy'>
+  {{{model.text}}}
+</div>
+
+
+<h2>
+  Activity
+</h2>
+
+<div class="lh-copy">
+  <ul>
+    {{#each (sort-by 'createdAt:desc' this.model.activities) as |activity|}}
+      <li>
+        &middot;
+        {{activity.text}}
+        <span class='pl2 silver'>{{activity.createdAt}}</span>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
+<h2>
+  Comments
+  {{#if model.comments.length}}
+    ({{model.comments.length}})
+  {{/if}}
+</h2>
+
+<div class='lh-copy'>
+  {{#if this.model.comments}}
+    <ul>
+      {{#each this.model.comments as |comment| }}
+        <CommentBox @comment={{comment}}></CommentBox>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p>This post has no comments.</p>
+  {{/if}}
+</div>

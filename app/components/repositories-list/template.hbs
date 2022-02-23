@@ -1,0 +1,11 @@
+<div class="repo__list" {{did-insert this.didRender}}>
+    {{#if this.repoList}}
+    <ul>
+        {{#each this.repoList as |item|}}
+        <li data-test-id="repository">{{item.name}} - ⭐️ {{item.stargazers_count}}</li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>Loading repositories...</p>
+    {{/if}}
+</div>

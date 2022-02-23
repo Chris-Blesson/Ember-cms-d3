@@ -1,0 +1,12 @@
+<h1>All Albums</h1>
+
+<div class="flex flex-wrap">
+  {{#each (sort-by 'id' this.model) as |album|}}
+    
+     {{#link-to 'media.albums.album.index' album class='db w4 mb3 mr3 link gray dim'}}
+      <img src={{album.images.firstObject.url}}
+        class='w4 h4 br2 ba b--moon-gray'>
+      <p class='pv2 tc lh-copy'>{{album.title}}</p>
+    {{/link-to}}
+  {{/each}}
+</div>

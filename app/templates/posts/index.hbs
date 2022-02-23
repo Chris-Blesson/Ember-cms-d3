@@ -1,0 +1,73 @@
+<h1>Blog posts</h1>
+
+<div class="flex tc">
+    <div class="flex-auto ph4">
+        <BarChart @data={{this.authors}} @selectedLabel={{this.selectedAuthor}}  @clickHandler={{this.clickHandler}}  @prop='currentAuthor' @color="blue" @index="0"></BarChart>
+        <h2 class="f5 mt3 mb4">Authors </h2>
+    </div>
+    <div class="flex-auto ph4">
+        <BarChart @data={{this.categories}} @selectedLabel={{this.selectedCategory}}  @clickHandler={{this.clickHandler}}  @prop='selectedCategory'  @color="green"  @index="1"></BarChart>
+        <h2 class="f5 mt3 mb4">Categories</h2>
+    </div>
+    <div class="flex-auto ph4">
+        <BarChart @data={{this.comments}} @clickHandler={{this.clickHandler}} @selectedLabel={{this.selectedPost}}  @prop='selectedPost' @color="red" @index="2"></BarChart>
+        <h2 class="f5 mt3 mb4">Comments</h2>
+    </div>
+</div>
+
+{{#if this.model}}
+<table class='lh-title' style="margin-top: 6rem;">
+    <thead>
+        <tr>
+            <th>
+                <a href="" {{on 'click' (fn this.sort 'title') }}>Title</a>
+            </th>
+            <th>
+                <a href="" {{on 'click' (fn this.sort 'date') }}>Published</a>
+            </th>
+            <th>
+                <a href="" {{on 'click' (fn this.sort 'author') }}>Author</a>
+            </th>
+            <th>
+                Tags
+            </th>
+            <th>
+                &nbsp;
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <KeyboardPress
+            @moveDown={{this.moveDown}}
+            @moveUp={{this.moveUp}}
+            @enter={{this.enter}}>
+        </KeyboardPress>
+
+
+        {{#each this.posts as |post|}}
+        <tr class="hide-child bl bw2 {{if (eq post navigatedPost) 'b--blue' 'b--transparent'}}"
+            data-test-id="post-row">
+            <td>
+                {{#link-to 'posts.post' post.id class='link dark-gray dim'}}
+                {{post.title}}
+                {{/link-to}}
+            </td>
+            <td>{{post.date}}</td>
+            <td>{{post.author}}</td>
+            <td>{{tag-list tags=post.tags}}</td>
+            <td class="tr">
+                <a href="#"
+                    class="child no-transition gray no-underline hover-dark-gray"
+                    data-test-id='delete'>
+                    {{fa-icon "trash"}}
+                    <span class="f6">Delete</span>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{else}}
+<p>No blog posts yet - get writing!</p>
+{{/if}}
